@@ -1,0 +1,14 @@
+
+ALTER SYSTEM SET open_cursors=1000 scope=both;
+ALTER SYSTEM SET cursor_sharing=FORCE scope=both;
+
+ALTER SESSION SET CONTAINER=FREEPDB1;
+
+create or replace 
+TRIGGER ALTER_NLS 
+AFTER LOGON ON DATABASE 
+BEGIN
+  execute immediate 'ALTER SESSION SET NLS_LENGTH_SEMANTICS="CHAR"';
+END;
+/
+
