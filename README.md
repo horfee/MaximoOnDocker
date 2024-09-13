@@ -21,7 +21,15 @@ Open a terminal, and type this:
   git clone https://github.com/horfee/MaximoOnDocker
   cd MaximoOnDocker
   ./initialize.sh
+  sudo reboot now
 ```
+
+Once reboot, run again:
+```bash
+  cd MaximoOnDocker
+  ./initialize.sh
+```
+
 
 The  prompt will update the apt-get registry, add Docker official repo and install docker engine.
 
@@ -38,6 +46,20 @@ This deployment offers you two ways :
 For both, we are using liberty profile deployment as it is the standard deployment for Maximo Manage.
 
 If needed you can modify the images used to fetch databases and application server.
+
+For Oracle DB :
+```bash
+  cd MaximoOnDocker
+  docker compose -f docker-compose.ora -d up
+```
+
+For IBM DB2 :
+```bash
+  cd MaximoOnDocker
+  docker compose -f docker-compose.db2 -d up
+```
+
+__The flag -d is meant to run detached, meaning you could close the terminal and not stop the deployment.__
 
 Your docker compose will boot up, creating database instances ready to be used by Maximo. **BUT** no schema will be created at first, as you may want to reuse a previous database. Once the container "maximo" is started, you need to run a maxinst command for this container :
 
