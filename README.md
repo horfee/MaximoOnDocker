@@ -20,16 +20,9 @@ Open a terminal, and type this:
 ```bash
   git clone https://github.com/horfee/MaximoOnDocker
   cd MaximoOnDocker
-  ./initialize.sh
-  sudo reboot now
+  ./initialize.sh -t oracle|db2 -e entitlement_key
 ```
-
-Once reboot, run again:
-```bash
-  cd MaximoOnDocker
-  ./initialize.sh
-```
-
+The parameters are optional and will be asked during initialization if not provided as arguments.
 
 The  prompt will update the apt-get registry, add Docker official repo and install docker engine.
 
@@ -45,11 +38,14 @@ This deployment offers you two ways :
 
 For both, we are using liberty profile deployment as it is the standard deployment for Maximo Manage.
 
-If needed you can modify the images used to fetch databases and application server.
+According to your choice, oracle or db2 deployment will start automatically.
+
+Additionally, if needed you can modify the images used to fetch databases and application server.
 
 For Oracle DB :
 ```bash
   cd MaximoOnDocker
+  sudo chown 54321:${USER} oracle-db/data 
   docker compose -f docker-compose.ora -d up
 ```
 
