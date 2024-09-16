@@ -57,16 +57,8 @@ For IBM DB2 :
 
 __The flag -d is meant to run detached, meaning you could close the terminal and not stop the deployment.__
 
-Your docker compose will boot up, creating database instances ready to be used by Maximo. **BUT** no schema will be created at first, as you may want to reuse a previous database. Once the container "maximo" is started, you need to run a maxinst command for this container :
+Your docker compose will boot up, creating database instances ready to be used by Maximo. **BUT** no schema will be created at first, as you may want to reuse a previous database. Once the container "maximo" is started, it will check if a maxinst is required.
 
-```bash
-  docker exec -it maximo /bin/bash
-  cd /opt/IBM
-  ./update-maximoproperties.sh
-  cd SMP/maximo/tools/maximo
-  ./maxinst.sh -imaxdemo -sMAXINDEX -tMAXDATA
-  exit
-```
 
 Once the maxinst procedure is over, you can restart the container :
 ```bash
