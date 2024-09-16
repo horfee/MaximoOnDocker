@@ -1,0 +1,38 @@
+version: "3"
+services:
+  database:
+    container_name: database
+    image: 'container-registry.oracle.com/database/free:latest'
+    restart: unless-stopped
+    networks:
+      - default
+    ports:
+      - '1521:1521'
+    environment:
+      - ORACLE_PWD=Smartway1
+    volumes:
+      - ./oracle-db/data:/opt/oracle/oradata
+      - ./oracle-db/setup_scripts:/opt/oracle/scripts/setup
+  maximo:
+    container_name: maximo
+    build:
+      context: './maximo'
+      dockerfile: Dockerfile.it
+    restart: unless-stopped
+    depends_on:
+      database:
+        condition: service_healthy
+    networks:
+      - default
+    ports:
+      - '9080:9080'
+    environment:
+      - MXE_DB_URL=jdbc:oracle:thin:@database:1521/freepdb1
+      - MXE_DB_SCHEMAOWNER=maximo
+      - MXE_DB_DRIVER=oracle.jdbc.driver.OracleDriver
+      - MXE_DB_USER=maximo
+      - MXE_DB_PASSWORD=maximo
+      - MAXIMO_DATAFILE=maxdemo
+    volumes:
+      - ./doclinks:/opt/IBM/doclinks
+  
