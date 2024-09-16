@@ -32,8 +32,6 @@ while [[ $# -gt 0 ]]; do
 done
 set -- "${POSITIONAL_ARGS[@]}" # restore positional parameters
 
-if [[ "1" == "0" ]]; then
-
 # Add Docker's official GPG key:
 sudo apt-get update
 sudo apt-get install ca-certificates curl
@@ -63,7 +61,7 @@ sudo systemctl enable containerd.service
 sudo docker volume create portainer_data
 sudo docker run -d -p 8000:8000 -p 9443:9443 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:2.21.1
 
-fi
+
 
 if [[ -z "${entitlementkey}" ]]; then
   echo "================================================="
