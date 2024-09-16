@@ -101,6 +101,7 @@ done
 
 if [[ "${type}" == "1" ]] || [[ "${type}" == "oracle" ]]; then
   echo "You choose oracle as deployment"
+  sudo mkdir oracle-db/data
   sudo chown 54321:${USER} oracle-db/data
   sudo docker compose -f docker-compose.ora up -d
 elif [[ "${type}" == "2" ]] || [[ "${type}" == "db2" ]]; then
