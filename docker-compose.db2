@@ -40,6 +40,7 @@ services:
       - MXE_DB_DRIVER=com.ibm.db2.jcc.DB2Driver
       - MXE_DB_USER=maximo
       - MXE_DB_PASSWORD=maximo
+      - MAXIMO_DATAFILE=maxdemo
     volumes:
       - ./doclinks:/opt/IBM/doclinks
   
