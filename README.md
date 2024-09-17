@@ -20,7 +20,7 @@ Open a terminal, and type this:
 ```bash
   git clone https://github.com/horfee/MaximoOnDocker
   cd MaximoOnDocker
-  ./initialize.sh -e entitlement_key
+  ./initialize.sh [-e entitlement_key]
 ```
 The parameters are optional and will be asked during initialization if not provided as arguments.
 
