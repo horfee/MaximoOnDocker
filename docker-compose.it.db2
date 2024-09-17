@@ -19,7 +19,7 @@ services:
     volumes:
       - ./db2/data:/database
     healthcheck:
-      test: ["CMD-SHELL", "/var/healthcheck.sh"]
+      test: ["CMD", "/var/healthcheck.sh"]
       start_period: 30s
       interval: 30s
       timeout: 10s

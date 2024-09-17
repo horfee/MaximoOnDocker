@@ -15,7 +15,7 @@ services:
       - ./oracle-db/data:/opt/oracle/oradata
       #- ./oracle-db/setup_scripts:/opt/oracle/scripts/setup
     healthcheck:
-      test: ["CMD-SHELL", "/opt/oracle/healthcheck.sh"]
+      test: ["CMD", "/opt/oracle/healthcheck.sh"]
       start_period: 60s
       interval: 30s
       timeout: 10s

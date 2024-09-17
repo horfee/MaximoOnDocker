@@ -18,6 +18,11 @@ fi
 
 # sqlplus will display "Session altered. " and 1 if the maximo user exists (else 0)
 # we then need to substring to get only the numeric value
-ret=${ret:17}
+ret=$(echo -n ${ret:17} | tr -d [:space:])
+echo "->$ret<-" >> /tmp/healthcheck.log
 
-exit $ret
+if [[ $ret == 1 ]]; then
+    exit 0
+else 
+    exit 1
+fi
