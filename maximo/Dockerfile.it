@@ -6,7 +6,7 @@
 # FROM cp.icr.io/cp/manage/extension-oilandgas:8.1.8 AS OILANDGAS
 # FROM cp.icr.io/cp/manage/extension-transportation:9.0.2 AS TRANSPORTATION
 # FROM cp.icr.io/cp/manage/extension-utilities:8.1.6 AS UTILITIES
-# FROM cp.icr.io/cp/manage/extension-serviceprovider:9.0.4 AS SERVICEPROVIDER
+FROM cp.icr.io/cp/manage/extension-serviceprovider:9.0.4 AS SERVICEPROVIDER
 # FROM cp.icr.io/cp/manage/extension-acm:8.1.11 AS ACM
 # FROM cp.icr.io/cp/manage/extension-hse:9.0.9 AS HSE
 # FROM cp.icr.io/cp/manage/extension-spatial:8.7.1 AS SPATIAL
@@ -40,10 +40,10 @@ RUN \
 ######## END OF ICD ########
 
 ######## SERVICEPROVIDER ########
-#COPY --chown=1000:0 --from=SERVICEPROVIDER /extension.zip /opt/IBM/SMP/maximo/
-#RUN \
-#  unzip -o ./extension.zip && rm ./extension.zip &&\
-#  unzip -o tools/maximo/en/serviceprovider/package.zip -d tools/maximo
+COPY --chown=1000:0 --from=SERVICEPROVIDER /extension.zip /opt/IBM/SMP/maximo/
+RUN \
+  unzip -o ./extension.zip && rm ./extension.zip &&\
+  unzip -o tools/maximo/en/serviceprovider/package.zip -d tools/maximo
 ######## END OF SERVICEPROVIDER ########
 
 ######## STRATEGIZE ########
