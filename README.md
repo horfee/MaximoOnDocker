@@ -20,7 +20,7 @@ Open a terminal, and type this:
 ```bash
   git clone https://github.com/horfee/MaximoOnDocker
   cd MaximoOnDocker
-  ./initialize.sh -t oracle|db2 -e entitlement_key
+  ./initialize.sh -e entitlement_key
 ```
 The parameters are optional and will be asked during initialization if not provided as arguments.
 
@@ -38,7 +38,7 @@ This deployment offers you two ways :
 
 For both, we are using liberty profile deployment as it is the standard deployment for Maximo Manage.
 
-According to your choice, oracle or db2 deployment will start automatically.
+The script wil ask you which dpeloyment you want to start, based on <deployment.ora.desc> files
 
 Additionally, if needed you can modify the images used to fetch databases and application server.
 
@@ -57,13 +57,8 @@ For IBM DB2 :
 
 __The flag -d is meant to run detached, meaning you could close the terminal and not stop the deployment.__
 
-Your docker compose will boot up, creating database instances ready to be used by Maximo. **BUT** no schema will be created at first, as you may want to reuse a previous database. Once the container "maximo" is started, it will check if a maxinst is required.
+Your docker compose will boot up, creating database instances ready to be used by Maximo. The application server will first check if maxinst or updatedb is required before starting. if so, the process will be triggered automatically, and once the process ends successfully, the app server will start, otherwise the system will restart the maximo container after 2minutes.
 
-
-Once the maxinst procedure is over, you can restart the container :
-```bash
-  docker restart maximo
-```
 
 Your maximo instance will be available by default at http://localhost:9080/maximo
 
@@ -72,3 +67,10 @@ Your maximo instance will be available by default at http://localhost:9080/maxim
 Don't forget to configure doclinks : a volume is already bound with path /opt/IBM/doclinks
 
 You can also run updatedb.sh command if you need to upgrade the version, tdtoolkit to add languages, etc.
+
+The script check-images-updates.sh lets you know if your dockerfile could be updated or not, and apply the modifications if you choose so.
+
+```bash
+  cd MaximoOnDocker
+  ./check-images-updates.sh maximo/Dockerfile
+```
