@@ -2,17 +2,26 @@ version: "3"
 services:
   database:
     container_name: database
-    image: 'container-registry.oracle.com/database/free:latest'
+    build: './oracle-db'
+    #image: 'container-registry.oracle.com/database/free:latest'
     restart: unless-stopped
     networks:
       - default
     ports:
       - '1521:1521'
+    hostname: 0a03e88525d5
     environment:
       - ORACLE_PWD=Smartway1
     volumes:
       - ./oracle-db/data:/opt/oracle/oradata
-      - ./oracle-db/setup_scripts:/opt/oracle/scripts/setup
+      #- ./oracle-db/setup_scripts:/opt/oracle/scripts/setup
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/oracle/healthcheck.sh"]
+      start_period: 60s
+      interval: 30s
+      timeout: 10s
+      retries: 100
+
   maximo:
     container_name: maximo
     build:

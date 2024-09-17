@@ -134,6 +134,7 @@ FROM websphere-liberty:24.0.0.8-full-java8-ibmjava
 COPY --chown=1001:0 --from=BASE /opt/IBM /opt/IBM/
 COPY --chown=1001:0 --from=BASE /opt/IBM/SMP/maximo/deployment/was-liberty-default/deployment/maximo-all/maximo-all-server /config/
 COPY --chown=1001:0 update-maximoproperties.sh /opt/IBM
+COPY --chown=1001:0 updatedb-needed.sh /opt/IBM
 COPY --chown=1001:0 docker-server.sh /opt/ibm/helpers/runtime/
 
 RUN chmod a+x /opt/IBM/update-maximoproperties.sh

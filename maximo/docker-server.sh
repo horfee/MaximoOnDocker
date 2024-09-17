@@ -155,6 +155,7 @@ elif [[ ! -z "$WLP_CHECKPOINT" ]]; then
   checkpoint.sh "$TMP_CHECKPOINT"
 else
   # The default is to just exec the supplied CMD
+  /opt/IBM/update-maximoproperties.sh
   currentworkdir=$(pwd)
   echo "MAXIMO : verify if maxinst needs to be performed..."
   source "/opt/IBM/SMP/maximo/functions-dbchecks.sh"
@@ -163,20 +164,45 @@ else
   if [[ "${isMaximoDB}" == *"status:is-maximo:false"* ]]; then
     echo "Database not found."
     echo "Running maxinst for file ${MAXIMO_DATAFILE}..."
-    /opt/IBM/update-maximoproperties.sh
+    
     
     cd /opt/IBM/SMP/maximo/tools/maximo
     ./maxinst.sh -i${MAXIMO_DATAFILE} -sMAXINDEX -tMAXDATA -y
     if [[ "$?" -eq "1" ]]; then
       echo "Maxinst/UpdateDB process ended with errors. Please check logs"
-      echo "This Pod will wait for 5 mins before erroring out. Logs will not be available after that."
       echo "For logs go to the terminal and cd /opt/IBM/SMP/maximo/tools/maximo/log "
+      sleep 120
+      exit 1
     fi
     
     echo "Maxinst Successful..."
     echo "End maxinst..."
     
     cd "${currentworkdir}"
+  else 
+    echo "MAXIMO : verify if updatedb needs to be performed..."
+    /opt/IBM/updatedb-needed.sh 
+    isUpdateNeeded=$?
+
+    if [[ ${isUpdateNeeded} == 1 ]]; then
+      echo "Database needs to be updated."
+      echo "Running updatedblite.sh now..."
+      cd /opt/IBM/SMP/maximo
+      ./clear-session.sh
+      cd /opt/IBM/SMP/maximo/tools/maximo
+
+      ./updatedblite.sh
+      updatedblite_res=$?
+      if [[ ${updatedblite_res} == 1 ]]; then
+        echo "UpdateDB process ended with errors. Please check logs"
+        echo "For logs go to the terminal and cd /opt/IBM/SMP/maximo/tools/maximo/log "
+        sleep 120
+        exit 1
+      fi
+
+      echo "Updatedblite successful..."
+      echo "End UpdateDBlite..."
+    fi
   fi
 
   exec "$@"
