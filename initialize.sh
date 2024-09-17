@@ -7,13 +7,8 @@ type=
 while [[ $# -gt 0 ]]; do
   case $1 in
     -h|--help)
-      echo "Usage is $0 [-e|--entitlementkey <entitlement_key> -t|--type oracle/db2]"
+      echo "Usage is $0 [-e|--entitlementkey <entitlement_key>]"
       exit 0
-      ;;
-    -t|--type)
-      type=$(echo -n $2 | awk '{print tolower($0)}')
-      shift # past argument
-      shift # past value
       ;;
     -e|--entitlementkey)
       entitlementkey="$2"
@@ -87,24 +82,32 @@ if [[ $? != 0 ]]; then
   exit 1
 fi
 
-while [[ -z "${type}" ]]; 
+user_choice=
+deployments=($(ls -1 *.desc))
+nbdeployments=${#deployments[@]}
+
+while [[ -z "${user_choice}" ]];
 do
+
   echo "What kind of deployment do you want to use ?"
-  echo "1) Oracle"
-  echo "2) DB2"
+  i=0
+  for deployf in ${deployments[@]}
+  do
+    echo "$((i+1))> $(cat $deployf)"
+    ((i++))
+  done
+
   echo -n "Your choice : "
-  read type
-  if [[ "${type}" != "1" && "${type}" != "2" ]]; then
-    type=
+  read user_choice
+  if [[ "${user_choice}" -lt "0" ]] || [[ "${user_choice}" -gt "${nbdeployments}" ]] || [[ $((user_choice)) != $user_choice ]]; then
+    user_choice=
+    echo "Invalid choice"
   fi
 done
 
-if [[ "${type}" == "1" ]] || [[ "${type}" == "oracle" ]]; then
-  echo "You choose oracle as deployment"
-  sudo mkdir oracle-db/data
-  sudo chown 54321:${USER} oracle-db/data
-  sudo docker compose -f docker-compose.ora up -d
-elif [[ "${type}" == "2" ]] || [[ "${type}" == "db2" ]]; then
-  echo "You choose DB2 as deployment"
-  sudo docker compose -f docker-compose.db2 up -d
-fi
+echo "Restoring Oracle DB prereqs ownership for data folder"
+sudo chown 54321:$USER oracle-db/data
+
+deployment=${deployments[$((user_choice-1))]:0:-5}
+echo "Deployment selected : $deployment"
+sudo docker compose -f $deployment up -d
