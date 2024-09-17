@@ -14,6 +14,8 @@ services:
       - DB2INSTANCE=db2inst1
       - DB2INST1_PASSWORD=maximo
       - DBNAME=maxdb9
+      - SCHEMA_USERNAME=maximo
+      - SCHEMA_PASSWORD=maximo
     volumes:
       - ./db2/data:/database
     healthcheck:
