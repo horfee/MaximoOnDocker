@@ -106,6 +106,7 @@ do
 done
 
 echo "Restoring Oracle DB prereqs ownership for data folder"
+sudo mkdir -p oracle-db/data
 sudo chown 54321:$USER oracle-db/data
 
 deployment=${deployments[$((user_choice-1))]:0:-5}
