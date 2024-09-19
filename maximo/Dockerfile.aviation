@@ -28,8 +28,7 @@ WORKDIR /opt/IBM/SMP/maximo
 ######## HSE ########
 COPY --chown=1000:0 --from=HSE /extension.zip /opt/IBM/SMP/maximo/
 RUN \
-  unzip -o ./extension.zip && rm ./extension.zip &&\
-  unzip -o tools/maximo/en/hse/package.zip -d tools/maximo
+  unzip -o ./extension.zip && rm ./extension.zip
 ######## END OF HEALTH ########
 
 ######## ICD ########
@@ -42,8 +41,7 @@ RUN \
 ######## SERVICEPROVIDER ########
 COPY --chown=1000:0 --from=SERVICEPROVIDER /extension.zip /opt/IBM/SMP/maximo/
 RUN \
-  unzip -o ./extension.zip && rm ./extension.zip &&\
-  unzip -o tools/maximo/en/serviceprovider/package.zip -d tools/maximo
+  unzip -o ./extension.zip && rm ./extension.zip
 ######## END OF SERVICEPROVIDER ########
 
 ######## STRATEGIZE ########
@@ -63,15 +61,13 @@ RUN \
 ######## TRANSPORTATION ########
 COPY --chown=1000:0 --from=TRANSPORTATION /extension.zip /opt/IBM/SMP/maximo/
 RUN \
-  unzip -o ./extension.zip && rm ./extension.zip &&\ 
-  unzip -o tools/maximo/en/transportation/package.zip -d tools/maximo
+  unzip -o ./extension.zip && rm ./extension.zip 
 ######## END OF TRANSPORTATION ########
 
 ######## ACM ########
 COPY --chown=1000:0 --from=ACM /extension.zip /opt/IBM/SMP/maximo/
 RUN \
-  unzip -o ./extension.zip && rm ./extension.zip &&\ 
-  unzip -o tools/maximo/en/aviation/package.zip -d tools/maximo
+  unzip -o ./extension.zip && rm ./extension.zip 
 ######## END OF ACM ########
 
 ######## AVIATION ########
