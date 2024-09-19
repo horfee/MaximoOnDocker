@@ -1,4 +1,4 @@
-FROM cp.icr.io/cp/manage/extension-health:9.0.48 AS HEALTH
+FROM cp.icr.io/cp/manage/extension-health:9.1.2 AS HEALTH
 # FROM cp.icr.io/cp/manage/extension-aviation:8.1.12 AS AVIATION
 # FROM cp.icr.io/cp/manage/bdi:8.3.2 AS BDI
 # FROM cp.icr.io/cp/manage/extension-civil:8.6.2 AS CIVIL
@@ -10,10 +10,10 @@ FROM cp.icr.io/cp/manage/extension-health:9.0.48 AS HEALTH
 # FROM cp.icr.io/cp/manage/extension-acm:8.1.11 AS ACM
 # FROM cp.icr.io/cp/manage/extension-hse:9.0.9 AS HSE
 # FROM cp.icr.io/cp/manage/extension-spatial:8.7.1 AS SPATIAL
-FROM cp.icr.io/cp/manage/extension-strategize:9.0.86 AS STRATEGIZE
+FROM cp.icr.io/cp/manage/extension-strategize:9.1.1 AS STRATEGIZE
 # FROM cp.icr.io/cp/manage/extension-icd:9.0.6 AS ICD
 
-FROM cp.icr.io/cp/manage/manageadmin:9.0.53 AS BASE
+FROM cp.icr.io/cp/manage/manageadmin:9.1.65 AS BASE
 
 WORKDIR /opt/IBM/SMP/maximo
 
