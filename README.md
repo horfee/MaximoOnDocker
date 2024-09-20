@@ -74,3 +74,76 @@ The script check-images-updates.sh lets you know if your dockerfile could be upd
   cd MaximoOnDocker
   ./check-images-updates.sh maximo/Dockerfile
 ```
+
+## Administrative tasks
+
+To reclaim space from docker, you could run the following scripts
+
+```bash
+  docker system prune #delete everything unused ! be careful : if you remove your container, you may loose all images, then rebuilding everything from scratch
+```
+
+```bash
+  docker builder du #output the total used space for building images
+  docker builder prune #remove all used cache
+```
+
+To stop a container
+
+```bash
+  docker stop <container> #stop the Oracle or DB2 container
+```
+
+To start a container
+
+```bash
+  docker start <container> #start the Oracle or DB2 container
+```
+
+To restart a container
+
+```bash
+  docker restart <container> #restart the Oracle or DB2 container
+```
+
+Useful docker compose commands 
+
+```bash
+  docker compose -f <docker-compose..yml> stop  #stop the full deployment (all containers will be stop but not removed)
+  docker compose -f <docker-compose..yml> rm    #remove stopped containers included in the deployment
+  docker compose -f <docker-compose..yml> down  #stop and remove containers included in the deployment
+  docker compose -f <docker-compose..yml> up    #create and start containers included in the deployment : if you close the terminal, the containers will be stopped
+  docker compose -f <docker-compose..yml> up -d #create and start containers included in the deployment in detached mode : if you close the terminal, the containers won't stop
+  docker compose -f <docker-compose..yml> up -d --build #create and start containers included in the deployment in detached mode : if you close the terminal, the containers won't stop. The images will be forced to be re created (existing images won't be considered)
+```
+
+
+Maximo initial database installation (maxinst) and update (updatedb) are performed automatically at boot of the maximo container, so you don't need to do it on your own. The problem of updatedb is it requires the application server to not be running ; but if you stop the application server the container will reboot automatically, so it is a dead end... that's why I automate it before the application server starts.
+
+To add additional languages : 
+```bash
+  docker exec -it maximo /bin/bash -c "cd /opt/IBM/SMP/maximo/tools/maximo && ./TDToolkit.sh -addlang<langcode> -maxmessfix -useexpander"
+```
+
+or 
+```bash
+  docker exec -it maximo /bin/bash 
+  cd /opt/IBM/SMP/maximo/tools/maximo 
+  ./TDToolkit.sh -addlang<langcode> -maxmessfix -useexpander
+```
+
+To run a configdb from the command line :
+```bash
+  docker exec -it maximo /bin/bash -c "cd /opt/IBM/SMP/maximo/tools/maximo && ./configdb.sh"
+```
+
+or 
+```bash
+  docker exec -it maximo /bin/bash 
+  cd /opt/IBM/SMP/maximo/tools/maximo 
+  ./configdb.sh
+```
+
+You can run all legagy commands the same way
+Some useful commands can be found here https://bportaluri.com/2012/12/maximo-command-line-reference.html
+
