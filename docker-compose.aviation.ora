@@ -48,7 +48,7 @@ services:
   bdi:
     container_name: bdi
     hostname: bdi
-    image: cp.icr.io/cp/manage/bdi:8.3.2
+    image: cp.icr.io/cp/manage/bdi:9.0.3
     restart: unless-stopped
     depends_on:
       database:
