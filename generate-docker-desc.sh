@@ -11,4 +11,4 @@ str=$(join_by "/" "${images[@]}")
 str=${str//\//" / "}
 str=${str//;/ }
 
-echo $str > "temp$2.desc"
+echo $str
