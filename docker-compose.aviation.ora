@@ -47,6 +47,7 @@ services:
   
   bdi:
     container_name: bdi
+    hostname: bdi
     image: cp.icr.io/cp/manage/bdi:8.3.2
     restart: unless-stopped
     depends_on:
@@ -57,8 +58,9 @@ services:
     ports:
       - '9081:9080'
     environment:
-      - MXE_DB_URL=jdbc:oracle:thin:@database:1521/freepdb1
-      - MXE_DB_SCHEMAOWNER=maximo
-      - MXE_DB_DRIVER=oracle.jdbc.driver.OracleDriver
-      - MXE_DB_USER=maximo
-      - MXE_DB_PASSWORD=maximo
+      - BDI_LOG_LEVEL=DEBUG
+      - BDI_XDB_CONNECT=jdbc:oracle:thin:@database:1521/freepdb1
+      - BDI_XDB_SCHEMA_NAME=maximo
+      - BDI_XDB_USER=maximo
+      - BDI_XDB_PASSWORD=maximo
+      - BDI_HOME=/opt/was/liberty/wlp/usr/shared/resources
