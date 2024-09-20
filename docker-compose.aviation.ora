@@ -58,7 +58,7 @@ services:
     ports:
       - '9081:9080'
     environment:
-      - BDI_LOG_LEVEL=DEBUG
+      - BDI_LOG_LEVEL=INFO
       - BDI_XDB_CONNECT=jdbc:oracle:thin:@database:1521/freepdb1
       - BDI_XDB_SCHEMA_NAME=maximo
       - BDI_XDB_USER=maximo
