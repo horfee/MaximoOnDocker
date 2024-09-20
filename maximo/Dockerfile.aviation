@@ -148,6 +148,8 @@ COPY --chown=1001:0 updatedb-needed.sh /opt/IBM
 COPY --chown=1001:0 docker-server.sh /opt/ibm/helpers/runtime/
 
 RUN chmod a+x /opt/IBM/update-maximoproperties.sh
+# Fix out of memory issue during maximo boot process
+RUN echo "-Xmx8192m" >> jvm.options
 
 RUN configure.sh
 
