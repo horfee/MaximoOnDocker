@@ -1,4 +1,4 @@
-version: "3"
+
 services:
   database:
     container_name: database
