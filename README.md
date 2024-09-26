@@ -147,3 +147,29 @@ or
 You can run all legagy commands the same way
 Some useful commands can be found here https://bportaluri.com/2012/12/maximo-command-line-reference.html
 
+# Monitoring maxinst progress
+
+During the initial maxinst process, some log files are created in the maximo container.
+
+You can watch the size of these files to have an idea on the datbaase install progress.
+2 files are important : Maxinst<timestamp>.log and Updatedb<timestamp>.log
+
+```bash
+  docker exec -it maximo /bin/bash -c 'watch "ls -lth /opt/IBM/SMP/maximo/tools/maximo/log/Maxinst*.log /opt/IBM/SMP/maximo/tools/maximo/log/Updatedb*.log"'
+```
+
+For maximo data file (see environment variable MAXIMO_DATAFILE in docker compose file) - no demo data:
+  - Maxinst<timestamp>.log file is around 85Mo
+  - Updatedb<timestamp>.log file
+    - Aviation: TBC
+    - Health + Strategize: TBC
+
+For maxdemo data file:
+  - Maxinst<timestamp>.log file is around 465Mo
+  - Updatedb<timestamp>.log file
+    - Aviation : 725Mo
+    - Health + Strategize : TBC
+
+# Limitations
+
+For now with Aviation, the BDI will bootstrap once the database is healthy, meaning maximo oracle schema is created. It means the BDI will start before the maxinst to be completed ; and of course it will crash and you will have to restart the bdi container once the maxinst is over.
