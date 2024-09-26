@@ -129,6 +129,8 @@ RUN mv web-dev.xml  web.xml
 WORKDIR /opt/IBM/SMP/maximo/deployment/was-liberty-default
 RUN ./maximo-all.sh
 
+RUN echo "-Xmx8192m" >> /opt/IBM/SMP/maximo/deployment/was-liberty-default/deployment/maximo-all/maximo-all-server/jvm.options
+
 FROM websphere-liberty:24.0.0.8-full-java8-ibmjava
 
 COPY --chown=1001:0 --from=BASE /opt/IBM /opt/IBM/
