@@ -35,7 +35,7 @@ dockerexists=$?
 if [[ "${dockerexists}" != "0" ]]; then
   # Add Docker's official GPG key:
   sudo apt-get update
-  sudo apt-get -f install ca-certificates curl
+  sudo apt-get -y install ca-certificates curl
   sudo install -m 0755 -d /etc/apt/keyrings
   sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
   sudo chmod a+r /etc/apt/keyrings/docker.asc
@@ -47,7 +47,7 @@ if [[ "${dockerexists}" != "0" ]]; then
     sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
   sudo apt-get update
-  sudo apt-get install -f docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+  sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
   
   # Enable non root docker users
   sudo groupadd docker
@@ -67,7 +67,7 @@ skopeoexists=$(skopeo -v)
 skopeoexists=$?
 
 if [[ "${skopeoexists}" != "0" ]]; then
-  sudo apt-get install -f skopeo
+  sudo apt-get install -y skopeo
 fi
 
   
