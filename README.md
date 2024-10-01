@@ -123,6 +123,8 @@ Maximo initial database installation (maxinst) and update (updatedb) are perform
 To add additional languages : 
 ```bash
   docker exec -it maximo /bin/bash -c "cd /opt/IBM/SMP/maximo/tools/maximo && ./TDToolkit.sh -addlang<langcode> -maxmessfix -useexpander"
+  docker exec -it maximo /bin/bash -c 'cd /opt/IBM/SMP/maximo/tools/maximo && for pmp in $(find <langcode>/xliff/* -type d -exec basename {} \;); do ./TDToolkit.sh -maxmessfix -useexpander -pmpupdate$pmp; done'
+
 ```
 
 or 
